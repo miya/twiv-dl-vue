@@ -1,0 +1,4 @@
+flask
+Twython
+requests
+gunicorn
