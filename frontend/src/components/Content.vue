@@ -3,16 +3,17 @@
     <v-card class="mx-auto" width="500" outlined>
       <v-progress-linear v-if="progress" absolute indeterminate color="success"/>
       <v-card-text>
-
         <!--URL入力-->
         <v-text-field
                 v-model="inputUrl"
                 color="success"
-                label="URL"
+                label="Twitter Video URL"
                 hint="https://twitter.com/i/status/{TweetID}"
                 append-icon="mdi-magnify"
                 outlined
                 @click:append="search"/>
+
+        <v-btn v-if="displayVideoUrl" color="success" @click="sheet=true" bottom text block>Tweet info</v-btn>
 
         <!--動画-->
         <div v-if="displayVideoUrl" class="text-center mt-4" >
@@ -21,7 +22,7 @@
 
         <!--ダウンロードボタン-->
         <div v-show="downloadVideoUrls[1]" class="text-center">
-          <p class="mt-4" >Download</p>
+          <p class="mt-4 mb-3">Download</p>
           <v-divider/>
           <v-btn
                   class="mr-2 ml-2 mt-4"
@@ -30,6 +31,7 @@
                   v-for="key in Object.keys(downloadVideoUrls)"
                   :key="key"
                   @click="download(downloadVideoUrls[key]['url'])"
+                  :disabled="progress"
                   small
                   outlined
                   >{{ downloadVideoUrls[key]['size'] }}
@@ -42,22 +44,55 @@
     <v-snackbar v-model="snackbar.active" timeout="3000" :color="snackbar.color" bottom absolute>
       {{ snackbar.text }}
     </v-snackbar>
+
+    <!--TweetInfo-->
+    <v-bottom-sheet v-model="sheet">
+      <v-sheet class="text-center" height="auto">
+
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-avatar class="mt-4" v-on="on" @click="jumpTwitter(tweetInfo['screen_name'])">
+              <img :src="tweetInfo['profile_image_url']" alt="icon">
+            </v-avatar>
+          </template>
+          <span>Open Twitter!</span>
+        </v-tooltip>
+
+        <p>{{ tweetInfo['name'] }} {{ '@' + tweetInfo['screen_name'] }}</p>
+        <v-divider/>
+        <p class="mt-3">{{ tweetInfo['tweet_text'] }}</p>
+        <p class="grey--text">{{ tweetInfo['created_at'] | dayjs}}</p>
+      </v-sheet>
+    </v-bottom-sheet>
+
   </v-container>
 </template>
 
 <script>
 import axios from 'axios'
+import dayjs from 'dayjs'
+
+dayjs.locale('ja')
 
 export default {
   name: 'Content',
 
   data() {
     return {
+      sheet: false,
       progress: false,
       snackbar: {},
       inputUrl: '',
       displayVideoUrl: '',
-      downloadVideoUrls: {}
+      downloadVideoUrls: {},
+      mediaUrl: '',
+      tweetInfo: {}
+    }
+  },
+
+  filters: {
+    dayjs(value) {
+      return dayjs(value).format('YYYY-M-D hh:mm:ss')
     }
   },
 
@@ -68,6 +103,10 @@ export default {
         color: color,
         active: true
       }
+    },
+
+    jumpTwitter(screenName) {
+      window.open('https://twitter.com/' + screenName)
     },
 
     search() {
@@ -89,6 +128,8 @@ export default {
             this.showSnackbar(res.data.message, 'success')
             this.displayVideoUrl = res.data['display_video_url']
             this.downloadVideoUrls = res.data['download_video_urls']
+            this.mediaUrl = res.data['media_url']
+            this.tweetInfo = res.data["tweet_info"]
           } else {
             this.showSnackbar(res.data.message, 'warning')
           }

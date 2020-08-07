@@ -2,21 +2,21 @@
   <v-app>
     <v-main>
       <Header/>
-      <Contents/>
+      <Content/>
     </v-main>
   </v-app>
 </template>
 
 <script>
 import Header from './components/Header'
-import Contents from './components/Content'
+import Content from './components/Content'
 
 export default {
   name: 'App',
 
   components: {
     Header,
-    Contents
+    Content
   },
 
   data: () => ({

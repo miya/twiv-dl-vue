@@ -1,3 +1,4 @@
+import json
 import re
 from datetime import datetime, timezone, timedelta
 from io import BytesIO
@@ -73,6 +74,9 @@ def get_video_data(tweet_id):
     # ツイートが存在しているかどうか
     if len(tweet_data) > 0:
 
+        convert_json = json.dumps(tweet_data[0], indent=4, ensure_ascii=False)
+        print(convert_json)
+
         # 動画、画像を含むメディア付きツイートかどうか
         if "extended_entities" in tweet_data[0]:
             media = tweet_data[0]["extended_entities"]["media"][0]
@@ -85,7 +89,6 @@ def get_video_data(tweet_id):
                 for i in media["video_info"]["variants"]:
                     if i["content_type"] == "video/mp4":
                         video.update({i["bitrate"]: i["url"]})
-
                 download_video_urls, display_video_url = get_video_urls(video)
 
                 return {
@@ -93,7 +96,15 @@ def get_video_data(tweet_id):
                     "message": "動画のURLを取得しました。",
                     "download_video_urls": download_video_urls,
                     "display_video_url": display_video_url,
-                    "rate_limit": rate_limit
+                    "media_url": media["media_url"],
+                    "rate_limit": rate_limit,
+                    "tweet_info": {
+                        "name": tweet_data[0]["user"]["name"],
+                        "screen_name": tweet_data[0]["user"]["screen_name"],
+                        "profile_image_url": tweet_data[0]["user"]["profile_image_url"],
+                        "tweet_text": tweet_data[0]["text"],
+                        "created_at": tweet_data[0]["created_at"]
+                    }
                 }
 
             else:
@@ -134,4 +145,7 @@ def download():
 
 
 if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+    app.run()
+
+    # debug
+#     app.run(port=5000, debug=True)
