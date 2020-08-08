@@ -38,7 +38,7 @@ def get_rate_limit():
 
 def get_video_urls(video):
     """
-    ビットレートの高さでソートしてsmall, medium, largeに振り分け動画のURLをセッションに格納
+    ビットレートの高さでソートしてする
     フロントで表示させる動画URLとダウンロードできる動画サイズを返す
     """
     sorted_bitrate = sorted(video)
