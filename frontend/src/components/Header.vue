@@ -30,7 +30,7 @@
             <v-icon>mdi-github</v-icon>
           </v-btn>
         </template>
-        <span>source code is here!</span>
+        <span>Source code is here!</span>
       </v-tooltip>
 
       <!--使い方ダイアログ-->
@@ -58,11 +58,11 @@ export default {
 
   methods: {
     openTwitter() {
-      window.open('https://twitter.com/share?url=https://your.service.url&text=twiv-dl%20%E3%83%84%E3%82%A4%E3%83%83%E3%82%BF%E3%83%BC%E3%81%AE%E5%8B%95%E7%94%BB%E3%82%92%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E3%81%A7%E3%81%8D%E3%82%8BWeb%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E3%81%A7%E3%81%99%E3%80%82')
+      window.open('https://twitter.com/share?url=https://twivdl.appspot.com&text=twiv-dl%20Twitter%E3%81%AE%E5%8B%95%E7%94%BB%E3%82%92%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E3%81%A7%E3%81%8D%E3%82%8BWeb%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%EF%BC%81%20', '_blank')
     },
 
     openGithub() {
-      window.open('https://github.com/miya/twiv-dl-vue')
+      window.open('https://github.com/miya/twiv-dl-vue', '_blank')
     }
   }
 }
