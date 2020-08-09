@@ -11,7 +11,9 @@
                 hint="https://twitter.com/i/status/{TweetID}"
                 append-icon="mdi-magnify"
                 outlined
-                @click:append="search"/>
+                @click:append="search"
+                v-on:keyup.enter="search"
+        />
 
         <v-btn v-if="displayVideoUrl" color="success" @click="sheet=true" bottom text block>Tweet info</v-btn>
 
