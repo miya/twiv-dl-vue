@@ -1,4 +1,3 @@
-import json
 import re
 from datetime import datetime, timezone, timedelta
 from io import BytesIO
@@ -74,9 +73,6 @@ def get_video_data(tweet_id):
     # ツイートが存在しているかどうか
     if len(tweet_data) > 0:
 
-        convert_json = json.dumps(tweet_data[0], indent=4, ensure_ascii=False)
-        print(convert_json)
-
         # 動画、画像を含むメディア付きツイートかどうか
         if "extended_entities" in tweet_data[0]:
             media = tweet_data[0]["extended_entities"]["media"][0]
@@ -148,4 +144,4 @@ if __name__ == '__main__':
     app.run()
 
     # debug
-#     app.run(port=5000, debug=True)
+    # app.run(port=5000, debug=True)
