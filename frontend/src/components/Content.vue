@@ -63,7 +63,7 @@
         <p>{{ tweetInfo['name'] }} {{ '@' + tweetInfo['screen_name'] }}</p>
         <v-divider/>
         <p class="mt-3">{{ tweetInfo['tweet_text'] }}</p>
-        <p class="grey--text">{{ tweetInfo['created_at'] | dayjs}}</p>
+        <p class="grey--text">created at {{ tweetInfo['created_at'] | dayjs}}</p>
       </v-sheet>
     </v-bottom-sheet>
 
