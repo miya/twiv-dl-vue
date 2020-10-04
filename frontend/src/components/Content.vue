@@ -18,7 +18,7 @@
         <v-btn v-if="displayVideoUrl" color="success" @click="sheet=true" bottom text block>Tweet info</v-btn>
 
         <!--動画-->
-        <div v-if="displayVideoUrl" class="text-center mt-4" >
+        <div v-if="displayVideoUrl" class="text-center mt-4">
           <iframe width="320" height="300" :src="displayVideoUrl" allowfullscreen/>
         </div>
 
@@ -49,11 +49,10 @@
 
     <!--TweetInfo-->
     <v-bottom-sheet v-model="sheet">
-      <v-sheet class="text-center" height="auto">
-
+      <v-sheet class="text-center" height="auto" outlined>
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
-            <v-avatar class="mt-4" v-on="on" @click="jumpTwitter(tweetInfo['screen_name'])">
+            <v-avatar class="mt-4 mb-4" v-on="on" @click="jumpTwitter(tweetInfo['screen_name'])">
               <img :src="tweetInfo['profile_image_url']" alt="icon">
             </v-avatar>
           </template>
