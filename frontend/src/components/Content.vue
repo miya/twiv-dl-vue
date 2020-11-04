@@ -3,6 +3,7 @@
     <v-card class="mx-auto" width="500" outlined>
       <v-progress-linear v-if="progress" absolute indeterminate color="success"/>
       <v-card-text>
+        
         <!--URL入力-->
         <v-text-field
                 v-model="inputUrl"
