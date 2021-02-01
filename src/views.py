@@ -13,7 +13,6 @@ def index():
 
 @app.route('/search', methods=['POST'])
 def search():
-    print('ok')
     if request.headers['Content-Type'] == 'application/json':
         input_url = request.json['inputUrl']
         tweet_id = get_tweet_id(input_url)
