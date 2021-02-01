@@ -8,12 +8,11 @@ from flask import Flask, request, jsonify, render_template, send_file
 
 import config
 
-twitter_keys = config.twitter_keys
 twitter = Twython(
-    twitter_keys["CONSUMER_KEY"],
-    twitter_keys["CONSUMER_SECRET"],
-    twitter_keys["ACCESS_KEY"],
-    twitter_keys["ACCESS_SECRET"]
+    config.CONSUMER_KEY,
+    config.CONSUMER_SECRET,
+    config.ACCESS_KEY,
+    config.ACCESS_SECRET
 )
 
 app = Flask(__name__, template_folder="./dist", static_folder='./dist/static')
