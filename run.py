@@ -8,6 +8,8 @@ from flask import Flask, request, jsonify, render_template, send_file
 
 import config
 
+DEBUG = config.DEBUG
+
 twitter = Twython(
     config.CONSUMER_KEY,
     config.CONSUMER_SECRET,
@@ -16,6 +18,7 @@ twitter = Twython(
 )
 
 app = Flask(__name__, template_folder="./dist", static_folder='./dist/static')
+app.debug = DEBUG
 
 
 def get_tweet_id(url):
@@ -141,6 +144,3 @@ def download():
 
 if __name__ == '__main__':
     app.run()
-
-    # debug
-    # app.run(port=5000, debug=True)
