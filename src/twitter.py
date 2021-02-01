@@ -1,6 +1,6 @@
 import re
 from datetime import datetime
-from typing import Dict, Optional, Union
+from typing import List, Dict, Tuple, Optional, Union
 from twython import TwythonAuthError, TwythonRateLimitError, TwythonError
 
 from src import twitter, jst
@@ -34,7 +34,7 @@ def get_rate_limit() -> Dict[str, str]:
     return {'remaining': limit, 'reset_time': reset_time}
 
 
-def get_video_urls(video: Dict[str, Union[str, int]]):
+def get_video_urls(video: Dict[str, Union[str, int]]) -> Tuple[List[Dict[str, str]], str]:
     """
     ビットレートの高さでソートする
     フロントで表示させる動画URLとダウンロードできる動画サイズを返す
@@ -43,24 +43,20 @@ def get_video_urls(video: Dict[str, Union[str, int]]):
         video(dict):
 
     Returns:
-
+        tuple
     """
     sorted_bitrate = sorted(video)
-    video_urls = {}
-    count = 1
+    video_urls = []
     for i in range(len(video)):
         video_url = video[sorted_bitrate[i]]
-        video_urls.update({
-            count: {
-                'size': re.findall('vid/(.+)/', video_url)[0],
-                'url': video[sorted_bitrate[i]]
-            }
+        video_urls.append({
+            'size': re.findall('vid/(.+)/', video_url)[0],
+            'url': video[sorted_bitrate[i]]
         })
-        count += 1
     return video_urls, video[sorted_bitrate[-1]]
 
 
-def get_video_data(tweet_id: str) -> Dict[str, Union[str, Dict, bool]]:
+def get_video_data(tweet_id: str) -> Dict[str, Union[str, Dict[str, str], bool]]:
     """
     twitterのAPIを用いてツイートIDに基づく動画のURLを取得
     クライアントに返すjsonの生成
