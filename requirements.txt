@@ -1,4 +1,5 @@
-flask
-Twython
-requests
-gunicorn
+flask >= 1.1.2
+Twython >= 3.8.2
+requests >= 2.25.1
+gunicorn >= 20.0.4
+python-dotenv >= 0.15.0
